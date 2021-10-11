@@ -1,21 +1,23 @@
-module ModuloModule(A,B) 
+module modulo(modA,modB, outMod, divZero);
 
 	
-	input [15:0] A, B; // 16-bit inputs
+	input [15:0] modA, modB; // 16-bit inputs
 	output [31:0] outMod; //32-bit output
 	reg [31:0] outMod;
-    output [1:0] divZero
-    reg [1:0] divZero 
+    output [1:0] divZero;
+    reg [1:0] divZero;
 	
-	always @ (A, B, outMod) begin
+	always @ (modA, modB, outMod) begin
 		
 	
-		outMod = A % B; // Calculate product
+		outMod = modA % modB; // calculates modulo
 
 	end
 	
-    if(B == 16'b000000000)
-    begin
-        divZero = 2'01
-    end
+    always @ (modB, divZero) begin //checks for divide by zero
+    if(!modB) 
+        assign divZero = 2'b01;
+	else 
+		assign divZero = 2'b00;
+	end
 endmodule 

@@ -16,11 +16,12 @@
 
 
 //imported needed module
-`include "Decoder.v"
+`include "decoder.v"
 `include "division_module.v"
 `include "Modulo.v"
 `include "multi.v"
 `include "Multiplexer.v"
+`include "AdderSub.v"
 //ALU start, requires 2 16 bit inputs, 4 bit op code and the output of the ALU
 module ALU(inputP, inputQ, opCode, outALU);
 
@@ -39,23 +40,29 @@ input [31:0] outDiv;
 
 input [31:0] outMult;
 
-//outputs for the error module
-output [1:0] divZeroMod;
+input [31:0] outAddsub;
 
-output [1:0] divZeroDiv;
+//outputs for the error module
+output divZeroMod;
+
+output divZeroDiv;
+
+output overflow;
+
 
 //for the decoder
 input [15:0] hotselect;
 
 //calling all modules
-Modulo inst1(inputP, inputQ, outMod, divZeroMod); //calculating modulo outputs the results (outMod) and a divide by zero 2 bit code
-Division inst2(inputP, inputQ, outDiv, divZeroDiv); //calculating division outputs the results (outDiv) and a divide by zero 2 bit code
-Multiplication inst3(inputP, inputQ, outMult); //calculating multiplication outputs the results (outMult)
-Decoder inst4(opCode, hotselect);
+AddSub inst0(inputP, inputQ, 1'b0, outAddsub, overflow);
+Modulo inst2(inputP, inputQ, outMod, divZeroMod); //calculating modulo outputs the results (outMod) and a divide by zero 2 bit code
+Division inst3(inputP, inputQ, outDiv, divZeroDiv); //calculating division outputs the results (outDiv) and a divide by zero 2 bit code
+Multiplication inst4(inputP, inputQ, outMult); //calculating multiplication outputs the results (outMult)
+Decoder inst5(opCode, hotselect);
 
 
-Multiplexer inst5(outMult, outDiv, outMod, 32'b0, 32'b0, 32'b0, 32'b0, 32'b0, 32'b0, 32'b0, 
-32'b0, 32'b0, 32'b0, 32'b0, 32'b0, 32'b0, hotselect, outALU); //multiplexer, for opcodes multiplication 0000, division 0001, Modulus 0010
+Multiplexer inst6(outAddsub, outAddsub, outMult, outDiv, outMod, 32'b0, 32'b0, 32'b0, 32'b0, 32'b0, 32'b0, 32'b0, 
+32'b0, 32'b0, 32'b0, 32'b0,hotselect, outALU); //multiplexer, for opcodes multiplication 0000, division 0001, Modulus 0010
 
 
  endmodule
@@ -75,7 +82,7 @@ module testbench();
 		assign inputQ = 16'b0011;	// # 3
         assign opCode = 4'b0000;
 		
-		#30;
+		#90;
 		
 		// Display results
 		$display("A: %1d", inputP);

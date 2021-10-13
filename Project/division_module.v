@@ -11,14 +11,14 @@
 	| quotient of the two integers. 												  |
 	-----------------------------------------------------------------------------------
 */
-module division (inputP, inputQ, quotient, divideByZero);
+module Division (inputP, inputQ, quotient, divideByZero);
 
 	// 16-bit inputs
-	input [16:0] inputP;
-	input [16:0] inputQ;
+	input [15:0] inputP;
+	input [15:0] inputQ;
 	//32-bit output
-	output [32:0] quotient;
-	reg [32:0] quotient;
+	output [31:0] quotient;
+	reg [31:0] quotient;
 	// Divide by zero output
 	output [1:0] divideByZero;
 	reg [1:0] divideByZero;

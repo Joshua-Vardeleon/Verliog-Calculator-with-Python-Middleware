@@ -7,7 +7,7 @@
 */
 
 /*	-----------------------------------------------------------------------------------
-	| ALU module:															          |
+	| ALU module:                                                                     |
 	| Takes two 16-bit integers, 4 bit op code and will do multiplication,            |
     | addition, subtraction and division and Modulus on those 16 bit integer          |
     | depending on what the op code is                                                |

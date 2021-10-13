@@ -6,9 +6,9 @@
 */
 
 /*	-----------------------------------------------------------------------------------
-	| Multiplication Module:											              |   
+	| Multiplication Module:                                                          |   
 	| Takes two 16-bit integers as input and outputs a 32-bit integer that is the     |
-	| product of the two integers. 												      |
+	| product of the two integers.                                                    |
 	-----------------------------------------------------------------------------------
 */
 module Multiplication (inputP, inputQ, product);

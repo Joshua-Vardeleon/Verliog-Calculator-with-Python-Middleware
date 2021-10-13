@@ -6,9 +6,9 @@
 */
 
 /*	-----------------------------------------------------------------------------------
-	| Division module:															      |
-	| Takes two 16-bit integers as input and outputs a 32-bit integer that is the	  |
-	| quotient of the two integers. 												  |
+	| Division module:                                                                |
+	| Takes two 16-bit integers as input and outputs a 32-bit integer that is the     |
+	| quotient of the two integers.                                                   |
 	-----------------------------------------------------------------------------------
 */
 module Division (inputP, inputQ, quotient, divideByZero);

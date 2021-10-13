@@ -6,9 +6,9 @@
 */
 
 /*      -----------------------------------------------------------------------------------
-	| Multiplexer Module:							  |   
-        | This module is used to decide what output will be selected determined by|
-	| by a 16 bit number called a Hot-Select		                  |
+	| Multiplexer Module:                                                             |   
+        | This module is used to decide what output will be selected determined by a 16   |
+	| a 16 bit number called a Hot-Select                                             |
 	-----------------------------------------------------------------------------------
 */
 module Multiplexer(input0, input1, input2, input3, input4, input5, input6, input7, input8, 

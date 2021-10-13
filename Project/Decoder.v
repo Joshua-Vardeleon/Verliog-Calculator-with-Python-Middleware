@@ -1,4 +1,4 @@
-module Decoder(opCode);
+module Decoder(opCode, hotselect);
 //inputs and outputs
 input [3:0] opCode;
 output [15:0] hotselect;

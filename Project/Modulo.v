@@ -1,3 +1,17 @@
+/* 	Author: Joshua Vardeleon
+	Cohort Members: Reg Gonzalez, Desh Padmakumar, Gabriela Saenz, Joshua Vardeleon,
+	Matthew Lineberry
+	Cohort Name: DJMr.G
+	Class: CS 4341.502
+*/
+
+/*	-----------------------------------------------------------------------------------
+	| Modulo module:															      |
+	| Takes two 16 bit input and uses them to calculate their Modulus, this module    |
+	| This module will output a 32 bit integer which is the results of the modulus    |
+	-----------------------------------------------------------------------------------
+*/
+
 module Modulo(inputP,inputQ, outMod, divZero);
 
 	

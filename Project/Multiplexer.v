@@ -1,3 +1,16 @@
+/* 	Author: Joshua Vardeleon
+	Cohort Members: Reg Gonzalez, Desh Padmakumar, Gabriela Saenz, Joshua Vardeleon,
+	Matthew Lineberry
+	Cohort Name: DJMr.G
+	Class: CS 4341.502
+*/
+
+/*      -----------------------------------------------------------------------------------
+	| Multiplexer Module:							  |   
+        | This module is used to decide what output will be selected determined by|
+	| by a 16 bit number called a Hot-Select		                  |
+	-----------------------------------------------------------------------------------
+*/
 module Multiplexer(input0, input1, input2, input3, input4, input5, input6, input7, input8, 
                   input9, input10, input11, input12, input13, input14, input15, hotselect, muxout);
 

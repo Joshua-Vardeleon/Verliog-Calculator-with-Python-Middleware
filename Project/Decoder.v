@@ -1,3 +1,17 @@
+/* 	Author: Joshua Vardeleon
+	Cohort Members: Reg Gonzalez, Desh Padmakumar, Gabriela Saenz, Joshua Vardeleon,
+	Matthew Lineberry
+	Cohort Name: DJMr.G
+	Class: CS 4341.502
+*/
+
+/*	-----------------------------------------------------------------------------------
+	| Decoder module:															      |
+	| Changes the 4 bit opcode to a 16 bit hotselect code                             | 
+	-----------------------------------------------------------------------------------
+*/
+
+
 module Decoder(opCode, hotselect);
 //inputs and outputs
 input [3:0] opCode;

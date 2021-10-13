@@ -1,3 +1,20 @@
+/* 	Author: Reg Gonzalez, Desh Padmakumar, Gabriela Saenz, Joshua Vardeleon,
+    Matthew Lineberry
+	Cohort Members: Reg Gonzalez, Desh Padmakumar, Gabriela Saenz, Joshua Vardeleon,
+	Matthew Lineberry
+	Cohort Name: DJMr.G
+	Class: CS 4341.502
+*/
+
+/*	-----------------------------------------------------------------------------------
+	| ALU module:															          |
+	| Takes two 16-bit integers, 4 bit op code and will do multiplication,            |
+    | addition, subtraction and division and Modulus on those 16 bit integer          |
+    | depending on what the op code is                                                |
+	-----------------------------------------------------------------------------------
+*/
+
+
 //imported needed module
 `include "Decoder.v"
 `include "division_module.v"

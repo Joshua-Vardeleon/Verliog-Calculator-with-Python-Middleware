@@ -20,8 +20,8 @@ module Division (inputP, inputQ, quotient, divideByZero);
 	output [31:0] quotient;
 	reg [31:0] quotient;
 	// Divide by zero output
-	output [1:0] divideByZero;
-	reg [1:0] divideByZero;
+	output divideByZero;
+	reg divideByZero;
 	
 	
 	// Checks to see if the second input is a 0 (i.e., divide by zero error)

@@ -1,4 +1,5 @@
 /* Project Part2
+ * Author: Gabriela Saenz
  * Cohort Members: Gabriela Saenz, Reg Gonzalez, Desh Padmakumar, Joshua Vardelon, and Matthew Lineberry
  * Cohort Name: DJMr.G 
  * Class: CS4341.502
@@ -13,13 +14,16 @@
     Adder-subtractor module written by Gabriela Saenz 
  */
 
-module add_sub (inputP, inputQ, mode, S, C, O); //put C, O, back into parameters
+module add_sub (inputP, inputQ, Command, mode, S, C, O); //put C, O, back into parameters
+
+        input [3:0] Command;
+        
 
         //Two 16-bit inputs
         input [15:0]    inputP;
         input [15:0]    inputQ;
         //if mode is 1, sub. if mode is 0, add.
-        input           mode;
+        inout           mode;
         //32-bit result of add_sub
         output [31:0]   S;
         wire [31:0]      S;
@@ -29,6 +33,8 @@ module add_sub (inputP, inputQ, mode, S, C, O); //put C, O, back into parameters
         //Overflow status
         output          O;
         wire             O;
+
+        command_mode cmd(Command, mode);
 
         //Each C(n) serves as the Carry out bit for the current full_adder 
         //And the Carry in bit for the nexy full_adder
@@ -107,14 +113,14 @@ module full_adder(S, Cout, inputP, inputQ, Cin);
 
 endmodule //end full_adder
 
-/*module command_mode(Command, mode);
+module command_mode(Command, mode);
     input [3:0]     Command;
     output          mode;
     reg             mode;
 
     always @ (Command) 
     begin 
-        if(Command)
+        if(Command == 3)
             mode = 1;
         else 
             mode = 0;
@@ -123,78 +129,3 @@ endmodule //end full_adder
 
 endmodule //end command_mode
 
-// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-module testbench();
-
-    reg [15:0]      inputP;
-    reg [15:0]      inputQ;
-    reg [3:0]       Command;
-    wire [31:0]     S;
-    wire            mode;
-    wire            C;
-    wire            O;
-    
-
-    command_mode cmd(Command, mode);
-    add_sub electricity(inputP, inputQ, mode, S, C, O); //put mode back in
-
-    initial begin
-
-            //for ints < 250
-            assign inputP = 16'b11110101;
-            assign inputQ = 16'b1111111;
-            assign Command = 4'b0000;
-            
-
-            #900;
-
-            $display("------ TEST #1: Add using integers < 250 ------");
-            $display("inputP: %1d", inputP);
-            $display("inputQ: %1d", inputQ);
-            $display("Mode: %1d", mode);
-            $display("Sum: %1d", S);
-            $display("Carry: %1d", C);
-            $display("Overflow: %1d", O);
-            $display("\n");
-
-            assign Command = 4'b0001;
-
-            #900;
-
-            $display("------ TEST #2: Subtract using integers < 250 ------");
-            $display("inputP: %1d", inputP);
-            $display("inputQ: %1d", inputQ);
-            $display("Mode: %1d", mode);
-            $display("Difference: %1d", S);
-            $display("\n");
-
-
-            assign inputP = 16'b111110100000000;
-            assign inputQ = 16'b11111010000000;
-            assign Command = 4'b0000;
-
-            #900;
-
-            $display("------ Test #3: Add using integers > 16000 ------");
-            $display("inputP: %1d", inputP);
-            $display("inputQ: %1d", inputQ);
-            $display("Mode: %1d", mode);
-            $display("Sum: %1d", S);
-            $display("\n");
-
-            assign Command = 4'b0001;
-
-            #900;
-
-            $display("------ TEST #4: Subtract using integers > 16000 ------");
-            $display("inputP: %1d", inputP);
-            $display("inputQ: %1d", inputQ);
-            $display("Mode: %1d", mode);
-            $display("Difference: %1d", S);
-            $display("\n");
-
-            #900;
-            $finish;
-    end 
-endmodule //end testbench*/

@@ -18,8 +18,8 @@ module Modulo(inputP,inputQ, outMod, divZero);
 	input [15:0] inputP, inputQ; // 16-bit inputs
 	output [31:0] outMod; //32-bit output
 	reg [31:0] outMod;
-    output [1:0] divZero;
-    reg [1:0] divZero;
+    output divZero;
+    reg divZero;
 	
 	always @ (inputP, inputQ, outMod) begin
 		

@@ -1,13 +1,14 @@
-import linecache
+
 import io
 import os
 import time
+import callVerilogFrustrum
 
 
 print('Choose what equation you want to choose: \n'
       'Circle = 1 \n'
       'Volume of a Sphere= 2 \n'
-      'Quadratic Formula = 3 \n')
+      'Volume of a Frustum of a cone = 3 \n')
 
 #ask user what 
 eqPick = input("type in the number: ")
@@ -15,14 +16,14 @@ eqPick = input("type in the number: ")
 if eqPick == "1":
     eqPick = input("what is the radius of the circle? ")
     newInputP = "                assign inputP = " + eqPick + "; \n"
-    print(newInputP)
+   
 
     file = open('calcCircle.v')
 
     editLine = file.readlines()
 
 
-    editLine[51] = newInputP
+    editLine[41] = newInputP
 
     file = open("calcCircle.v", "w")
 
@@ -68,30 +69,31 @@ elif eqPick == "3":
     smRadius = input("What is the smaller radius of the Frustrum? ")
     bgRadius = input("What is the bgger of the Frustrum? ")
 
-    radiusSmIn = "                assign inputP = " + smRadius + "; \n"
-    radiusBGIn = "                assign inputP = " + bgRadius + "; \n"
-    heightIn = "                assign inputP = " + height + "; \n"
 
+    #equation (pi * h * (R^2 + Rr + r^2))/3
 
-    file = open('calcFrustrum.v')
+    #R^2
+    r = callVerilogFrustrum.callVer("1111" , smRadius, "2")
 
-    editLine = file.readlines()
-
-
-    editLine[51] = radiusSmIn
-    editLine[63] = radiusBGIn
+    #r^2
+    r2 = callVerilogFrustrum.callVer("1111" , bgRadius, "2")
     
+    #Rr
+    rR = callVerilogFrustrum.callVer("0010" , bgRadius, smRadius)
 
-    file = open("calcFrustrum.v", "w")
+    #r^2 + R^2
+    r = callVerilogFrustrum.callVer("0000" , r, r2)
+    
+    #r^2 + Rr + R^2
+    r = callVerilogFrustrum.callVer("0000" , r, rR)
 
-    new_file_contents = "". join(editLine)
+    #pi(r^2 + Rr + R^2)
+    r = callVerilogFrustrum.callVer("0010" , r, "3141")
 
-    file.write(new_file_contents)
+    #h *pi(r^2 + Rr + R^2)
+    r = callVerilogFrustrum.callVer("0010" , r, height)
 
-    file.close()
+    #(h *pi(r^2 + Rr + R^2))/3
+    r = callVerilogFrustrum.callVer("0011" ,"3000" , r)
 
-    time.sleep(2)
-    os.system("iverilog calcFrustrum.v")
-    time.sleep(2)
-    os.system("vvp a.out")
-
+    print("frustum of a Cone Volume: " + r)

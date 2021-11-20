@@ -24,7 +24,7 @@ module calcCircle();
 						#2;
 						clk=1;
 						#3;  
-						$display("CLK: %b,Register: %b",clk,electricity1.outval);					
+						//$display("CLK: %b,Register: %b",clk,electricity1.outval);					
 						#2;	
 					end
 			end
@@ -33,45 +33,28 @@ module calcCircle();
 	initial begin
 		$display("\n==========================================================================\n");
 		#5;
-
-		$display("Switch on circuit");
-		$display("Input P:%1d,inputQ:%4d,OpCode:%4d,Result:%8d",inputP,inputQ,opCode,outALU);
-		$display("Input P:%b,InputQ:%b,OpCode:%4b,Result:%8b, Error: %b",inputP,inputQ,opCode,outALU, errorCode);
-		$display("\n=======================\n");
-
-		$display("Reset");
+		//reset
 		assign inputP=16'b0000;
-		
 		assign opCode=4'b1100;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
 
-		$display("Exponent");
-                assign inputP = -15; 
+
+                assign inputP = 12; 
 		assign inputQ = 2;
 		assign opCode=4'b1111;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
 
-		$display("Multiplication");
+		assign inputQ = 0;
 		assign inputP= 3141;
 		assign opCode=4'b0010;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
 
-		$display("Division");
+
 		assign inputP = 1000;
 		assign opCode=4'b0011;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
+		$display("Result:%8d", outALU);
+		
 		
 		
 

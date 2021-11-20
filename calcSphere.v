@@ -49,7 +49,7 @@ module calcCircle();
 		$display("\n=======================\n");
 
 		$display("Exponent");
-                assign inputP = 50; 
+                assign inputP = 5; 
 		assign inputQ = 3;
 		assign opCode=4'b1111;	
 		#10;

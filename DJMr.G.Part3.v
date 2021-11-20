@@ -11,6 +11,7 @@
 `include "Arithmetic.v"
 `include "DFF.v"
 `include "Multiplexer-Decode-ErrorMode.v"
+`include "FeedbackCheck.v"
 
 //=============================================
 
@@ -23,21 +24,20 @@
 */
 //----------------------------------------------------------------------
 //ALU start, requires 2 16 bit inputs, 4 bit op code and the output of the ALU
-module ALU(clk,inputP, inputQ, opCode, signedoutALU, errorCode);
+module ALU(clk,inputP, inputQ, opCode, outALU, errorCode);
 
 input clk;		//Added in part3
 
 //instiantiating inputs and output
-input signed [31:0] inputP;
-input signed [31:0] inputQ;
-input signed [3:0] opCode;
-output signed [31:0] outALU;
-wire signed [31:0] inputP;
-wire signed [31:0] inputQ;
-wire signed [3:0] opCode;
+input  [31:0] inputP;
+input  [31:0] inputQ;
+input  [3:0] opCode;
+output  [31:0] outALU;
+wire  [31:0] inputP;
+wire  [31:0] inputQ;
+wire  [3:0] opCode;
 reg [31:0] outALU;
-output signed [31:0] signedoutALU;
-reg  signed [31:0] signedoutALU;
+
 
 //these inputs are used to connect arithmetic outputs into the multiplexer
 wire [31:0] outMod;
@@ -93,51 +93,59 @@ wire [31:0] muxout;
 //for the decoder
 input [15:0] hotselect;
 
+input [31:0] feedbackCheck;
+
 //calling all modules
 DFF #(32) state_reg(clk,muxout,outval);
 
-add_sub inst1(inputQ, inputP, opCode, mode, outAddSub, C, overflow); 
-Modulo inst2(inputQ, inputP, outMod, divZeroMod); //calculating modulo outputs the results (outMod) and a divide by zero 2 bit code
-Division inst3(inputQ, inputP, outDiv, divZeroDiv); //calculating division outputs the results (outDiv) and a divide by zero 2 bit code
-Multiplication inst4(inputQ, feedback, outMult); //calculating multiplication outputs the results (outMult)
+FeedbackCheck inst0(inputQ, feedback, feedbackCheck);
+
+
+
+	 
+
+add_sub inst1(inputP, feedbackCheck, opCode, mode, outAddSub, C, overflow); 
+Modulo inst2(feedbackCheck, inputP, outMod, divZeroMod); //calculating modulo outputs the results (outMod) and a divide by zero 2 bit code
+Division inst3(feedbackCheck, inputP, outDiv, divZeroDiv); //calculating division outputs the results (outDiv) and a divide by zero 2 bit code
+Multiplication inst4(inputP, feedbackCheck, outMult); //calculating multiplication outputs the results (outMult)
 Decoder inst5(opCode, hotselect); //changes 4 bit op code to a 16 hot select code
 ErrorModule inst6(overflow, divZeroDiv, divZeroMod, errorCode); //will output 00 if no error, 01 if there's a divide by zero, or a 10 if there's an overflow
-exponent inst9(inputP, inputQ, outEX);
+exponent inst9(inputP, feedbackCheck, outEX);
 
-AND logic1(inputP, feedback, outAND); //AND Gate
-NAND logic2(inputP, feedback, outNAND); //NAND Gate
-NOR logic3(inputP, feedback, outNOR); //NOR Gate 
-NOT logic4(inputP, feedback, outNOT); //NOT Gate
-OR logic5(inputP, feedback, outOR); //OR Gate
-XNOR logic6(inputP, feedback, outXNOR); //XNOR Gate
-XOR logic7(inputP, feedback, outXOR); //XOR Gate 
+AND logic1(inputP, feedbackCheck, outAND); //AND Gate
+NAND logic2(inputP, feedbackCheck, outNAND); //NAND Gate
+NOR logic3(inputP, feedbackCheck, outNOR); //NOR Gate 
+NOT logic4(inputP, feedbackCheck, outNOT); //NOT Gate
+OR logic5(inputP, feedbackCheck, outOR); //OR Gate
+XNOR logic6(inputP, feedbackCheck, outXNOR); //XNOR Gate
+XOR logic7(inputP, feedbackCheck, outXOR); //XOR Gate 
 
 
 //Added in part3
 Multiplexer inst7(channels, hotselect, muxout);
-assign channels[0] = outAddSub; //0000
-assign channels[1] = outAddSub; //0001
-assign channels[2] = outMult; //0010
-assign channels[3] = outDiv; //0011
-assign channels[4] = outMod; //0100
-assign channels[5] = outAND; //0101
-assign channels[6] = outNAND; //0110
-assign channels[7] = outNOR; //0111
-assign channels[8] = outNOT; //1000
-assign channels[9] = outOR; //1001
-assign channels[10] = outXNOR; //1010
-assign channels[11] = outXOR; //1011
-assign channels[12] = 32'b0; //1100
-assign channels[13] = 32'b11111111111111111111111111111111; //1101
-assign channels[14] = feedback; //1110
-assign channels[15] = outEX; //1111
+assign channels[0] = outAddSub; //0000 add
+assign channels[1] = outAddSub; //0001 subtract
+assign channels[2] = outMult; //0010 multiplication
+assign channels[3] = outDiv; //0011 division
+assign channels[4] = outMod; //0100 modulus
+assign channels[5] = outAND; //0101 AND
+assign channels[6] = outNAND; //0110 NAND
+assign channels[7] = outNOR; //0111 NOR
+assign channels[8] = outNOT; //1000 NOT
+assign channels[9] = outOR; //1001 OR
+assign channels[10] = outXNOR; //1010 XNOR
+assign channels[11] = outXOR; //1011 XOR
+assign channels[12] = 32'b0; //1100 reset
+assign channels[13] = 32'b11111111111111111111111111111111; //1101 preset
+assign channels[14] = feedback; //1110 feedback
+assign channels[15] = outEX; //1111 exponent
 
 	//assign feedback = outval[15:0];
 
 	always @(*)
 	begin
 	//-----------------------------
-		signedoutALU = muxout;
+		outALU = muxout;
 	//-----------------------------
 	end
 

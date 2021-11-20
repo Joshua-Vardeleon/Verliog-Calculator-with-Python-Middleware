@@ -24,7 +24,7 @@ module calcCircle();
 						#2;
 						clk=1;
 						#3;  
-						$display("CLK: %b,Register: %b",clk,electricity1.outval);					
+						//$display("CLK: %b,Register: %b",clk,electricity1.outval);					
 						#2;	
 					end
 			end
@@ -34,55 +34,39 @@ module calcCircle();
 		$display("\n==========================================================================\n");
 		#5;
 
-		$display("Switch on circuit");
-		$display("Input P:%1d,inputQ:%4d,OpCode:%4d,Result:%8d",inputP,inputQ,opCode,outALU);
-		$display("Input P:%b,InputQ:%b,OpCode:%4b,Result:%8b, Error: %b",inputP,inputQ,opCode,outALU, errorCode);
-		$display("\n=======================\n");
 
-		$display("Reset");
+		//equation (1000* 4 * pi * r^3)/3000
+		//reset
 		assign inputP=16'b0000;
-		
 		assign opCode=4'b1100;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
-
-		$display("Exponent");
+		//r^3
+		//line below will be edited through python script
                 assign inputP = 5; 
 		assign inputQ = 3;
 		assign opCode=4'b1111;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,inputQ,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,inputQ,opCode,outALU, errorCode);
-		$display("\n=======================\n");
 
 		
-		$display("Multiplication");
+		//1000* pi* r^2
 		assign inputP= 3141;
-		
 		assign opCode=4'b0010;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
 
-		$display("Multiplication");
+
+		//(1000 * 4 * pi * r^3)
 		assign inputP= 4;
-		
 		assign opCode=4'b0010;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
 
-		$display("Division");
+
+		//(1000* 4 * pi * r^3)/3000
 		assign inputP= 3000;
 		assign opCode=4'b0011;	
 		#10;
-		$display("Input P:%4d,Feedback:%4d,OpCode:%4d,Result:%8d",inputP,electricity1.feedback,opCode,outALU);
-		$display("Input P:%4b,Feedback:%4b,OpCode:%4b,Result:%8b, Error: %b",inputP,electricity1.feedback,opCode,outALU, errorCode);
-		$display("\n=======================\n");
+		
+		$display("Results: %8d",outALU);
+		$display("\n==========================================================================\n");
 		
 		
 

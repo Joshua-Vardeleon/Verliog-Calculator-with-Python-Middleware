@@ -7,7 +7,6 @@
 */
 
 `include "logic_operations.v"
-`include "exponent.v"
 `include "Arithmetic.v"
 `include "DFF.v"
 `include "Multiplexer-Decode-ErrorMode.v"

@@ -1,5 +1,5 @@
-`include  "DJMr.G.Part3.v"
-module calcCircle();	
+`include  "DJMr.G.Part4.v"
+module calcFrustrum();	
 	// Declaring inputs and outputs
 	reg  [31:0] inputP;
 	reg  [31:0] inputQ;
@@ -38,7 +38,7 @@ module calcCircle();
 		assign opCode=4'b1100;	
 		#10;
                 assign inputP = 3000; 
-                assign inputQ = 25765623; 
+                assign inputQ = 20617524; 
                 assign opCode = 4'b0011; 
 		#10;
 		$display(outALU);

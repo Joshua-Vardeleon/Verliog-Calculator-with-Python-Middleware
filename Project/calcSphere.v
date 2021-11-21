@@ -1,5 +1,5 @@
-`include  "DJMr.G.Part3.v"
-module calcCircle();
+`include  "DJMr.G.Part4.v"
+module calcSphere();
 	
 	// Declaring inputs and outputs
 	reg  [31:0] inputP;

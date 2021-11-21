@@ -37,9 +37,9 @@ def callVer(opCode, inputP, inputQ):
 
     #output is put into a.out
     time.sleep(0.5)
-    os.system("vvp a.out > a.dat")
+    os.system("vvp a.out > DJ.Mr.GPart4.out")
     #open a.dat
-    file = open("a.dat", "r")
+    file = open("DJ.Mr.GPart4.out", "r")
 
 
     readLine = str(file.readlines(1))

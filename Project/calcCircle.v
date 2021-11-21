@@ -31,7 +31,7 @@ module calcCircle();
 
 	//STIMULUS THREAD 
 	initial begin
-		$display("\n==========================================================================\n");
+		
 		#5;
 		//reset
 		//equation: (1000 * pi*r^2)/1000
@@ -56,8 +56,8 @@ module calcCircle();
 		assign opCode=4'b0011;	
 		#10;
 
-		$display("Result:%8d", outALU);
-		$display("\n==========================================================================\n");
+		$display(outALU);
+		
 		
 		
 		

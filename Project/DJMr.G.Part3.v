@@ -92,32 +92,27 @@ wire [31:0] muxout;
 //for the decoder
 input [15:0] hotselect;
 
-input [31:0] feedbackCheck;
+input [31:0] feedbackCheckOut;
 
 //calling all modules
 DFF #(32) state_reg(clk,muxout,outval);
 
-FeedbackCheck inst0(inputQ, feedback, feedbackCheck);
-
-
-
-	 
-
-add_sub inst1(inputP, feedbackCheck, opCode, mode, outAddSub, C, overflow); 
-Modulo inst2(feedbackCheck, inputP, outMod, divZeroMod); //calculating modulo outputs the results (outMod) and a divide by zero 2 bit code
-Division inst3(feedbackCheck, inputP, outDiv, divZeroDiv); //calculating division outputs the results (outDiv) and a divide by zero 2 bit code
-Multiplication inst4(inputP, feedbackCheck, outMult); //calculating multiplication outputs the results (outMult)
+FeedbackCheck inst0(inputQ, feedback, feedbackCheckOut); //checks if feedback is zero, if zero then feedbackCheckOut will equal inputQ, otherwise it will equal feedback
+add_sub inst1(inputP, feedbackCheckOut, opCode, mode, outAddSub, C, overflow); 
+Modulo inst2(feedbackCheckOut, inputP, outMod, divZeroMod); //calculating modulo outputs the results (outMod) and a divide by zero 2 bit code
+Division inst3(feedbackCheckOut, inputP, outDiv, divZeroDiv); //calculating division outputs the results (outDiv) and a divide by zero 2 bit code
+Multiplication inst4(inputP, feedbackCheckOut, outMult); //calculating multiplication outputs the results (outMult)
 Decoder inst5(opCode, hotselect); //changes 4 bit op code to a 16 hot select code
 ErrorModule inst6(overflow, divZeroDiv, divZeroMod, errorCode); //will output 00 if no error, 01 if there's a divide by zero, or a 10 if there's an overflow
-exponent inst9(inputP, feedbackCheck, outEX);
+exponent inst9(inputP, feedbackCheckOut, outEX);
 
-AND logic1(inputP, feedbackCheck, outAND); //AND Gate
-NAND logic2(inputP, feedbackCheck, outNAND); //NAND Gate
-NOR logic3(inputP, feedbackCheck, outNOR); //NOR Gate 
-NOT logic4(inputP, feedbackCheck, outNOT); //NOT Gate
-OR logic5(inputP, feedbackCheck, outOR); //OR Gate
-XNOR logic6(inputP, feedbackCheck, outXNOR); //XNOR Gate
-XOR logic7(inputP, feedbackCheck, outXOR); //XOR Gate 
+AND logic1(inputP, feedbackCheckOut, outAND); //AND Gate
+NAND logic2(inputP, feedbackCheckOut, outNAND); //NAND Gate
+NOR logic3(inputP, feedbackCheckOut, outNOR); //NOR Gate 
+NOT logic4(inputP, feedbackCheckOut, outNOT); //NOT Gate
+OR logic5(inputP, feedbackCheckOut, outOR); //OR Gate
+XNOR logic6(inputP, feedbackCheckOut, outXNOR); //XNOR Gate
+XOR logic7(inputP, feedbackCheckOut, outXOR); //XOR Gate 
 
 
 //Added in part3

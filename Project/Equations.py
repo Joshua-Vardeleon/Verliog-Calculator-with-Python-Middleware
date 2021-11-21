@@ -3,6 +3,7 @@ import io
 import os
 import time
 import callVerilogFrustrum
+import re
 
 
 print('Choose what equation you want to choose: \n'
@@ -23,6 +24,7 @@ if eqPick == "1":
     newInputP = "                assign inputP = " + eqPick + "; \n"
    
     #opens calcCircle.v
+    print(os.getcwd())
     file = open('calcCircle.v')
 
     #reads calcCircle.v and stores it in a array editLine[]
@@ -46,23 +48,40 @@ if eqPick == "1":
     time.sleep(2)
     os.system("iverilog calcCircle.v")
     time.sleep(2)
-    os.system("vvp a.out")
+    #stores output of verilog in a.dat
+    os.system("vvp a.out > a.dat")
+
+    #open a.dat and read line 1
+    file = open("a.dat", "r")
+    readLine = str(file.readlines(1))
+
+    #using regex to remove non neccesary characters
+    answer = re.sub(r"[a-z \s ' \] \[ \\ ]", '', readLine)
+
+    #print area of circle
+    answer = "Area of a circle: " + answer
+    print("\n==========================================================================\n")
+    print(answer)
+    print("\n==========================================================================\n")
+
+    #writes output into text.txt
+    file = open('output.txt', 'w')
+    file.write(answer)
+    file.close()
 
 #volume of a circle
 #equation (4*pi * r^3)/3
 elif eqPick == "2":
     eqPick = input("What is the radius of the sphere? ")
     newInputP = "                assign inputP = " + eqPick + "; \n"
-    print(newInputP)
+
 
     file = open('calcSphere.v')
 
     editLine = file.readlines()
 
-
     editLine[44] = newInputP
     
-
     #most work is done through calcSphere,v
     #open file to write
     file = open("calcSphere.v", "w")
@@ -77,7 +96,27 @@ elif eqPick == "2":
     time.sleep(2)
     os.system("iverilog calcSphere.v")
     time.sleep(2)
-    os.system("vvp a.out")
+
+    #stores output of verilog into a.dat
+    os.system("vvp a.out > a.dat")
+
+    #putting reading verilog output
+    file = open("a.dat", "r")
+    
+    #getting output from a.dat
+    readLine = str(file.readlines(1))
+    answer = re.sub(r"[a-z \s ' \] \[ \\ ]", '', readLine)
+
+    #print answer
+    answer = "Volume of a Sphere: " + answer
+    print("\n==========================================================================\n")
+    print(answer)
+    print("\n==========================================================================\n")
+
+    #store answer in output.txt
+    file = open('output.txt', 'w')
+    file.write(answer)
+    file.close()
 
 #Volume of a Frustum of a Cone
 #equation (pi * h * (R^2 + Rr + r^2))/3
@@ -86,7 +125,7 @@ elif eqPick == "3":
     #user input of height, smaller radius and bigger radius
     height = input("What is the height of the Frustrum? ")
     smRadius = input("What is the smaller radius of the Frustrum? ")
-    bgRadius = input("What is the bgger of the Frustrum? ")
+    bgRadius = input("What is the bigger radius of the Frustrum? ")
 
 
     #equation (pi * h * (R^2 + Rr + r^2))/3
@@ -113,10 +152,17 @@ elif eqPick == "3":
 
     #(h *pi(r^2 + Rr + R^2))/3
     r = callVerilogFrustrum.callVer("0011" ,"3000" , r)
+   
 
+    #stores output in output.txt
+    file = open('output.txt', 'w')
+    file.write("Frustum of a Cone Volume: " + r)
+    file.close()
 
     #print output
     print("\n==========================================================================\n")
     print("Frustum of a Cone Volume: " + r)
     print("\n==========================================================================\n")
+
+
 

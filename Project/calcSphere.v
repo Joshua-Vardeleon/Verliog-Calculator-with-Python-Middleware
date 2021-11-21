@@ -31,7 +31,7 @@ module calcCircle();
 
 	//STIMULUS THREAD 
 	initial begin
-		$display("\n==========================================================================\n");
+		
 		#5;
 
 
@@ -42,7 +42,7 @@ module calcCircle();
 		#10;
 		//r^3
 		//line below will be edited through python script
-                assign inputP = 5; 
+                assign inputP = 12; 
 		assign inputQ = 3;
 		assign opCode=4'b1111;	
 		#10;
@@ -65,8 +65,8 @@ module calcCircle();
 		assign opCode=4'b0011;	
 		#10;
 		
-		$display("Results: %8d",outALU);
-		$display("\n==========================================================================\n");
+		$display(outALU);
+		
 		
 		
 
